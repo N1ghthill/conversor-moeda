@@ -1,6 +1,10 @@
 # 💱 Conversor de Moedas em Tempo Real
-
-![Tema Escuro - Fantasma das Sombras](assets/screenshot.png)
+[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/Hosted_on-GitHub_Pages-blue?logo=github)](https://pages.github.com/)
+[![Status](https://img.shields.io/badge/Status-Online-brightgreen)]()
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?logo=javascript)]()
+[![API](https://img.shields.io/badge/API-ExchangeRate--API-orange)]()
 
 Um conversor de moedas moderno e responsivo que busca cotações em tempo real através de API pública. Desenvolvido com HTML, CSS e JavaScript puro.
 
