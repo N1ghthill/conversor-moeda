@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Moedas em Tempo Real</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-coins"></i> Conversor de Moedas</h1>
+            <p class="subtitle">Cotações atualizadas em tempo real via API</p>
+        </header>
+
+        <main>
+            <div class="converter-card">
+                <!-- Área de Entrada -->
+                <div class="input-section">
+                    <div class="amount-box">
+                        <label for="amount"><i class="fas fa-money-bill-wave"></i> Valor para Converter</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="amount" placeholder="Ex: 100.00" value="100" step="0.01" min="0">
+                            <span class="currency-symbol" id="from-symbol">R$</span>
+                        </div>
+                    </div>
+
+                    <div class="currency-selectors">
+                        <!-- Moeda de Origem -->
+                        <div class="currency-box">
+                            <label for="from-currency"><i class="fas fa-wallet"></i> De:</label>
+                            <div class="select-wrapper">
+                                <select id="from-currency">
+                                    <option value="BRL">BRL - Real Brasileiro</option>
+                                    <option value="USD">USD - Dólar Americano</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - Libra Esterlina</option>
+                                    <option value="JPY">JPY - Iene Japonês</option>
+                                </select>
+                                <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- Botão de Troca -->
+                        <button id="swap-currencies" class="swap-btn" aria-label="Inverter moedas">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+
+                        <!-- Moeda de Destino -->
+                        <div class="currency-box">
+                            <label for="to-currency"><i class="fas fa-hand-holding-usd"></i> Para:</label>
+                            <div class="select-wrapper">
+                                <select id="to-currency">
+                                    <option value="USD">USD - Dólar Americano</option>
+                                    <option value="BRL">BRL - Real Brasileiro</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - Libra Esterlina</option>
+                                    <option value="JPY">JPY - Iene Japonês</option>
+                                </select>
+                                <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão de Conversão -->
+                <button id="convert-btn" class="convert-btn">
+                    <i class="fas fa-sync-alt"></i> Converter Agora
+                </button>
+
+                <!-- Resultado -->
+                <div class="result-section">
+                    <div class="result-box">
+                        <h3><i class="fas fa-calculator"></i> Resultado da Conversão</h3>
+                        <div class="result-display">
+                            <div class="conversion-text" id="conversion-text">
+                                Aguardando conversão...
+                            </div>
+                            <div class="conversion-rate" id="rate-text">
+                                Taxa de câmbio: --
+                            </div>
+                        </div>
+                        <div class="last-update" id="last-update">
+                            <i class="far fa-clock"></i> Última atualização: --
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações da API -->
+                <div class="api-info">
+                    <p><i class="fas fa-database"></i> Dados fornecidos pela <strong>ExchangeRate-API</strong>. Atualizados automaticamente.</p>
+                </div>
+            </div>
+
+            <!-- Tabela de Taxas -->
+            <div class="rates-table">
+                <h3><i class="fas fa-table"></i> Taxas de Câmbio Atuais (base: <span id="base-currency">BRL</span>)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Moeda</th>
+                            <th>Código</th>
+                            <th>Taxa (1 <span id="base-currency-symbol">R$</span>)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rates-table-body">
+                        <!-- As linhas serão inseridas via JavaScript -->
+                        <tr><td colspan="3">Carregando cotações...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <footer>
+            <p>Projeto educativo desenvolvido com HTML, CSS e JavaScript puro.</p>
+            <p class="timestamp">Carregado em: <span id="load-time">--:--:--</span></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
