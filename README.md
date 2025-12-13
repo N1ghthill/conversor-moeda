@@ -1,64 +1,76 @@
-# 💱 Conversor de Moedas em Tempo Real
+![GitHub last commit](https://img.shields.io/github/last-commit/n1ghthill/conversor-moeda)
+![GitHub repo size](https://img.shields.io/github/repo-size/n1ghthill/conversor-moeda)
+![GitHub issues](https://img.shields.io/github/issues/n1ghthill/conversor-moeda)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/n1ghthill/conversor-moeda)
+
+# 💱 Conversor de Moedas 2.0
+**Versão Moderna com Atualização em Tempo Real**
+
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/Hosted_on-GitHub_Pages-blue?logo=github)](https://pages.github.com/)
-[![Status](https://img.shields.io/badge/Status-Online-brightgreen)]()
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
+[![Status](https://img.shields.io/badge/Status-Production-brightgreen)]()
+[![Version](https://img.shields.io/badge/Version-2.0-8a2be2)]()
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?logo=javascript)]()
-[![API](https://img.shields.io/badge/API-ExchangeRate--API-orange)]()
+[![API](https://img.shields.io/badge/API-Frankfurter.app-orange)](https://www.frankfurter.app/)
 
-Um conversor de moedas moderno e responsivo que busca cotações em tempo real através de API pública. Desenvolvido com HTML, CSS e JavaScript puro.
+> Conversor de moedas moderno, responsivo e totalmente funcional com atualização automática de cotações.
 
-## ✨ Funcionalidades
+## ✨ **Novidades da Versão 2.0**
 
-- ✅ **Conversão em tempo real** usando ExchangeRate-API
-- ✅ **Tema escuro moderno** (Fantasma das Sombras)
-- ✅ **Cache inteligente** (5 minutos para evitar requisições excessivas)
-- ✅ **Tabela de taxas** atualizada automaticamente
-- ✅ **Inversão rápida** de moedas com um clique
-- ✅ **Responsivo** para mobile e desktop
-- ✅ **Validação** de entrada em tempo real
-- ✅ **Histórico offline** (usa última cotação disponível)
+✅ **Atualização automática** - Taxas atualizadas a cada 5 minutos  
+✅ **Botão de refresh** - Atualização manual com animação  
+✅ **Tabela interativa** - Clique para selecionar moeda  
+✅ **Cache inteligente** - Reduz chamadas à API  
+✅ **Notificações visuais** - Feedback das ações  
+✅ **Timer de atualização** - Contador em tempo real  
+✅ **Design aprimorado** - Tema escuro moderno  
+✅ **Mais moedas** - Suporte a 10+ moedas  
 
-## 🚀 Como Usar
+## 🚀 **Demonstração Online**
 
-1. Acesse: [https://github.com/N1ghthill/conversor-moeda.git]
-2. Digite o valor a converter
-3. Selecione as moedas de origem e destino
-4. Clique em **"Converter Agora"**
-5. Use o botão ↔️ para inverter as moedas rapidamente
+🌐 **Acesse a versão online:** [GitHub Pages](https://n1ghthill.github.io/conversor-moeda/)
 
-## 🛠️ Tecnologias
+## 🛠️ **Funcionalidades**
+
+### 🔄 Conversão em Tempo Real
+- Taxas atualizadas via API Frankfurter
+- Conversão instantânea entre 10+ moedas
+- Histórico offline (fallback automático)
+
+### 🎨 Interface Moderna
+- Tema escuro "Fantasma das Sombras"
+- Design completamente responsivo
+- Animações suaves e feedback visual
+- Ícones Font Awesome
+
+### ⚡ Performance Otimizada
+- Cache de 5 minutos para taxas
+- Atualização automática configurável
+- Carregamento rápido (sem dependências pesadas)
+
+### 🔧 Recursos Avançados
+- **Inversão rápida** de moedas
+- **Atualização manual** com um clique
+- **Tabela interativa** de taxas
+- **Validação** em tempo real
+- **Notificações** de status
+
+## 🏗️ **Tecnologias Utilizadas**
 
 - **HTML5** - Estrutura semântica
-- **CSS3** - Flexbox, Grid, variáveis CSS, tema escuro
-- **JavaScript ES6+** - Async/await, fetch API, manipulação de DOM
-- **ExchangeRate-API** - Dados de câmbio em tempo real
-- **Font Awesome** - Ícones
-- **Google Fonts** - Tipografia (Poppins, Roboto Mono)
+- **CSS3** - Flexbox, Grid, variáveis CSS
+- **JavaScript ES6+** - Async/await, Fetch API
+- **Frankfurter.app API** - Dados de câmbio gratuitos
+- **Font Awesome 6** - Ícones
+- **Google Fonts** - Poppins & Roboto Mono
 
-## 📁 Estrutura do Projeto
-
+## 📁 **Estrutura do Projeto**
 conversor-moeda/<br>
-├── index.html # Estrutura principal<br>
+├── index.html # Página principal<br>
 ├── style.css # Estilos (tema escuro)<br>
-├── script.js # Lógica e API<br>
+├── script.js # Lógica completa<br>
 ├── README.md # Esta documentação<br>
 ├── LICENSE # Licença MIT<br>
-└── assets/ # Recursos visuais<br>
-└── screenshot.png # Captura de tela<br>
-
-## 🔧 Instalação Local
-
-```bash
-# Clone o repositório
-git clone https://github.com/N1ghthill/conversor-moeda.git
-
-# Entre na pasta
-cd conversor-moeda
-
-# Instale um servidor local (se necessário)
-python3 -m http.server 8080
-
-# Abra no navegador
-# http://localhost:8080
-
+├── .gitignore # Arquivos ignorados<br>
+└── assets/ # Recursos<br>
+├── images/ # Screenshots<br>
+└── favicon/ # Ícones<br>
