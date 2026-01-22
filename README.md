@@ -1,76 +1,28 @@
-![GitHub last commit](https://img.shields.io/github/last-commit/n1ghthill/conversor-moeda)
-![GitHub repo size](https://img.shields.io/github/repo-size/n1ghthill/conversor-moeda)
-![GitHub issues](https://img.shields.io/github/issues/n1ghthill/conversor-moeda)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/n1ghthill/conversor-moeda)
+# Conversor de Moedas 2.0
 
-# 💱 Conversor de Moedas 2.0
-**Versão Moderna com Atualização em Tempo Real**
+Conversor de moedas moderno com atualização automática e tabela interativa de taxas.
+Modern currency converter with auto-refresh and an interactive rates table.
 
-[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production-brightgreen)]()
-[![Version](https://img.shields.io/badge/Version-2.0-8a2be2)]()
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?logo=javascript)]()
-[![API](https://img.shields.io/badge/API-Frankfurter.app-orange)](https://www.frankfurter.app/)
+## Demo
+- https://n1ghthill.github.io/conversor-moeda/
 
-> Conversor de moedas moderno, responsivo e totalmente funcional com atualização automática de cotações.
+## Recursos | Features
+- Cotações em tempo real via Frankfurter API. / Real-time rates via the Frankfurter API.
+- Atualização automática a cada 5 minutos e botão de refresh. / Auto-refresh every 5 minutes with a manual refresh button.
+- Cache local para reduzir chamadas à API. / Local cache to reduce API calls.
+- Tabela interativa para trocar a moeda base. / Interactive table to change the base currency.
+- Interface responsiva com tema escuro. / Responsive UI with a dark theme.
 
-## ✨ **Novidades da Versão 2.0**
+## Stack
+HTML5, CSS3, JavaScript (ES6+), Frankfurter API, Font Awesome, Google Fonts.
 
-✅ **Atualização automática** - Taxas atualizadas a cada 5 minutos  
-✅ **Botão de refresh** - Atualização manual com animação  
-✅ **Tabela interativa** - Clique para selecionar moeda  
-✅ **Cache inteligente** - Reduz chamadas à API  
-✅ **Notificações visuais** - Feedback das ações  
-✅ **Timer de atualização** - Contador em tempo real  
-✅ **Design aprimorado** - Tema escuro moderno  
-✅ **Mais moedas** - Suporte a 10+ moedas  
+## Como rodar | How to run
+1. Clone o repositório.
+2. Abra o `index.html` ou sirva com `python -m http.server`.
+3. Acesse `http://localhost:8000`.
 
-## 🚀 **Demonstração Online**
+## Screenshot
+![Screenshot](assets/Captura%20de%20tela%20de%202025-12-13%2014-36-39.png)
 
-🌐 **Acesse a versão online:** [GitHub Pages](https://n1ghthill.github.io/conversor-moeda/)
-
-## 🛠️ **Funcionalidades**
-
-### 🔄 Conversão em Tempo Real
-- Taxas atualizadas via API Frankfurter
-- Conversão instantânea entre 10+ moedas
-- Histórico offline (fallback automático)
-
-### 🎨 Interface Moderna
-- Tema escuro "Fantasma das Sombras"
-- Design completamente responsivo
-- Animações suaves e feedback visual
-- Ícones Font Awesome
-
-### ⚡ Performance Otimizada
-- Cache de 5 minutos para taxas
-- Atualização automática configurável
-- Carregamento rápido (sem dependências pesadas)
-
-### 🔧 Recursos Avançados
-- **Inversão rápida** de moedas
-- **Atualização manual** com um clique
-- **Tabela interativa** de taxas
-- **Validação** em tempo real
-- **Notificações** de status
-
-## 🏗️ **Tecnologias Utilizadas**
-
-- **HTML5** - Estrutura semântica
-- **CSS3** - Flexbox, Grid, variáveis CSS
-- **JavaScript ES6+** - Async/await, Fetch API
-- **Frankfurter.app API** - Dados de câmbio gratuitos
-- **Font Awesome 6** - Ícones
-- **Google Fonts** - Poppins & Roboto Mono
-
-## 📁 **Estrutura do Projeto**
-conversor-moeda/<br>
-├── index.html # Página principal<br>
-├── style.css # Estilos (tema escuro)<br>
-├── script.js # Lógica completa<br>
-├── README.md # Esta documentação<br>
-├── LICENSE # Licença MIT<br>
-├── .gitignore # Arquivos ignorados<br>
-└── assets/ # Recursos<br>
-├── images/ # Screenshots<br>
-└── favicon/ # Ícones<br>
+## Licença | License
+MIT. Consulte `LICENSE`.
