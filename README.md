@@ -49,24 +49,24 @@ Currency Converter 2.0 is built to be fast, clean and embeddable — perfect as 
 
 ## ▶️ Como rodar localmente | Run locally
 ### Opção 1 — Abrir direto
-Abra o `index.html` no navegador.
+- Abra o `index.html` no navegador.
 
 ### Opção 2 — Servir com Python (recomendado)
-
-python -m http.server
+- python -m http.server
 
 ### Acesse: http://localhost:8000
 
 ## 🔌 API utilizada | Data source
 
-Dados fornecidos pela Frankfurter API (taxas atualizadas com base no ECB).
-Rates provided by Frankfurter API (ECB-based exchange rates).
+- Dados fornecidos pela Frankfurter API (taxas atualizadas com base no ECB).
+- Rates provided by Frankfurter API (ECB-based exchange rates).
 
 ## 🧩 Embed no seu site | Embed into your site
 
 ### Você pode embutir o conversor de duas formas:
 
-✅ 1) Via iframe (mais simples)
+## ✅ 1) Via iframe (mais simples)
+
 <iframe
   src="https://n1ghthill.github.io/conversor-moeda/"
   width="100%"
@@ -75,26 +75,19 @@ Rates provided by Frankfurter API (ECB-based exchange rates).
   loading="lazy"
 ></iframe>
 
-✅ 2) Como módulo interno (mais profissional)
+## ✅ 2) Como módulo interno (mais profissional)
 
-### Transformar em uma pasta /apps/conversor/
-
-### Reaproveitar o CSS do seu site
-
-### Integrar com seu “hub” de projetos
-
-### Planejado: versão “widget” com export e configuração por parâmetros.
+- Transformar em uma pasta /apps/conversor/
+- Reaproveitar o CSS do seu site
+- Integrar com seu “hub” de projetos
+- Planejado: versão “widget” com export e configuração por parâmetros.
 
 ## 🗺️ Roadmap
 
 - Suporte a favoritos (moedas mais usadas)
-
 - Histórico simples (últimas conversões)
-
 - Atalhos rápidos (USD, EUR, BRL)
-
 - Modo “widget” (embed + config)
-
 - Melhorar acessibilidade (aria + navegação teclado)
 
 ## 📄 Licença | License
