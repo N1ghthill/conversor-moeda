@@ -56,10 +56,28 @@ const currencyNames = {
 };
 
 // Cache e Estado
-let ratesCache = {};
-let cacheTimestamp = null;
+let ratesCache = {};        // { [currency]: { data, fetchedAt } }
+const pendingRequests = {}; // deduplicação de requisições simultâneas
 let autoRefreshInterval = null;
 let refreshCountdown = 300; // 5 minutos em segundos
+
+function isCacheValid(currency) {
+    const entry = ratesCache[currency];
+    return entry && (Date.now() - entry.fetchedAt) < CACHE_DURATION;
+}
+
+function saveCacheToStorage() {
+    try {
+        localStorage.setItem('ratesCache', JSON.stringify(ratesCache));
+    } catch {}
+}
+
+function loadCacheFromStorage() {
+    try {
+        const saved = localStorage.getItem('ratesCache');
+        if (saved) ratesCache = JSON.parse(saved);
+    } catch { ratesCache = {}; }
+}
 
 // ============================================
 // FUNÇÕES AUXILIARES
@@ -166,82 +184,54 @@ function formatAmountInput() {
  * Busca taxas de câmbio da API
  */
 async function fetchExchangeRates(baseCurrency = 'BRL') {
-    // Verifica cache
-    if (ratesCache[baseCurrency] && cacheTimestamp) {
-        const cacheAge = Date.now() - cacheTimestamp;
-        if (cacheAge < CACHE_DURATION) {
-            console.log('📦 Usando dados em cache');
-            updateRatesTable(ratesCache[baseCurrency]);
-            return ratesCache[baseCurrency];
-        }
+    if (isCacheValid(baseCurrency)) {
+        console.log('📦 Usando dados em cache');
+        const cached = ratesCache[baseCurrency].data;
+        updateRatesTable(cached);
+        return cached;
     }
 
-    try {
-        // Estado de carregamento
-        if (elements.resultText) {
-            elements.resultText.textContent = '📡 Conectando à API...';
-            elements.resultText.style.color = '#aaa';
-        }
-
-        // Faz requisição à API
-        const response = await fetch(API_URL);
-
-        if (!response.ok) {
-            throw new Error(`Erro na API: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('✅ Dados recebidos:', data);
-
-        // Se a moeda base for EUR, retorna direto
-        if (baseCurrency === 'EUR') {
-            ratesCache[baseCurrency] = data;
-            cacheTimestamp = Date.now();
-            updateRatesTable(data);
-            return data;
-        }
-
-        // Converte para outras moedas base
-        const eurToBase = data.rates[baseCurrency];
-        if (!eurToBase) {
-            throw new Error(`Moeda ${baseCurrency} não suportada`);
-        }
-
-        // Calcula taxas convertidas
-        const convertedRates = {};
-        for (const [currency, rateInEUR] of Object.entries(data.rates)) {
-            convertedRates[currency] = eurToBase / rateInEUR;
-        }
-        convertedRates[baseCurrency] = 1;
-
-        const convertedData = {
-            base: baseCurrency,
-            rates: convertedRates,
-            date: data.date
-        };
-
-        // Atualiza cache
-        ratesCache[baseCurrency] = convertedData;
-        cacheTimestamp = Date.now();
-
-        // Atualiza tabela
-        updateRatesTable(convertedData);
-
-        return convertedData;
-
-    } catch (error) {
-        console.error('❌ Erro na API:', error);
-
-        // Dados de fallback
-        const fallbackRates = getFallbackRates(baseCurrency);
-        if (fallbackRates) {
-            showNotification('⚠️ Usando dados offline', 'warning');
-            updateRatesTable(fallbackRates);
-            return fallbackRates;
-        }
-
-        throw error;
+    // Reutiliza promise em voo para a mesma moeda
+    if (pendingRequests[baseCurrency]) {
+        return pendingRequests[baseCurrency];
     }
+
+    pendingRequests[baseCurrency] = (async () => {
+        try {
+            const response = await fetch(`${API_URL}?from=${baseCurrency}`);
+
+            if (!response.ok) {
+                throw new Error(`Erro na API: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('✅ Dados recebidos:', data);
+
+            const resultData = { base: baseCurrency, rates: { ...data.rates, [baseCurrency]: 1 }, date: data.date };
+
+            ratesCache[baseCurrency] = { data: resultData, fetchedAt: Date.now() };
+            saveCacheToStorage();
+            updateRatesTable(resultData);
+
+            return resultData;
+
+        } catch (error) {
+            console.error('❌ Erro na API:', error);
+
+            const fallbackRates = getFallbackRates(baseCurrency);
+            if (fallbackRates) {
+                showNotification('⚠️ Usando dados offline', 'warning');
+                updateRatesTable(fallbackRates);
+                return fallbackRates;
+            }
+
+            throw error;
+        } finally {
+            delete pendingRequests[baseCurrency];
+        }
+    })();
+
+    return pendingRequests[baseCurrency];
 }
 
 /**
@@ -323,6 +313,16 @@ function updateRatesTable(data) {
 /**
  * Converte moedas
  */
+function setConvertLoading(isLoading) {
+    const btn = elements.convertBtn;
+    const result = document.querySelector('.result-display');
+    if (btn) {
+        btn.classList.toggle('loading', isLoading);
+        btn.disabled = isLoading;
+    }
+    if (result) result.classList.toggle('loading', isLoading);
+}
+
 async function convertCurrency() {
     // Validação básica
     if (!elements.amount || !elements.fromCurrency || !elements.toCurrency) {
@@ -358,6 +358,7 @@ async function convertCurrency() {
         return;
     }
 
+    setConvertLoading(true);
     try {
         // Busca taxas
         const ratesData = await fetchExchangeRates(fromCurrency);
@@ -401,6 +402,8 @@ async function convertCurrency() {
             elements.rateText.textContent = '💡 Dica: Use moedas principais';
         }
         showNotification('Erro na conversão', 'error');
+    } finally {
+        setConvertLoading(false);
     }
 }
 
@@ -456,12 +459,10 @@ async function manualRefresh() {
     elements.refreshBtn.disabled = true;
 
     try {
-        // Limpa cache
-        ratesCache = {};
-        cacheTimestamp = null;
-        refreshCountdown = 300; // Reset timer
+        // Invalida só a moeda atual
+        delete ratesCache[elements.fromCurrency.value];
+        refreshCountdown = 300;
 
-        // Busca novas taxas
         await fetchExchangeRates(elements.fromCurrency.value);
 
         // Atualiza conversão atual
@@ -500,11 +501,9 @@ function startAutoRefresh() {
         console.log('🔄 Atualização automática iniciada...');
 
         try {
-            // Limpa cache
-            ratesCache = {};
-            cacheTimestamp = null;
+            // Invalida só a moeda atual
+            delete ratesCache[elements.fromCurrency.value];
 
-            // Atualiza taxas
             await fetchExchangeRates(elements.fromCurrency.value);
 
             // Atualiza conversão atual
@@ -526,13 +525,35 @@ function startAutoRefresh() {
 // ============================================
 // INICIALIZAÇÃO
 // ============================================
+function applyWidgetMode() {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('embed')) return;
+
+    document.body.classList.add('widget-mode');
+
+    const hide = (sel) => { const el = document.querySelector(sel); if (el) el.style.display = 'none'; };
+    hide('header');
+    hide('footer');
+    hide('.api-info');
+    hide('.rates-section');
+
+    const from = params.get('from');
+    const to = params.get('to');
+    if (from && elements.fromCurrency) elements.fromCurrency.value = from;
+    if (to && elements.toCurrency) elements.toCurrency.value = to;
+}
+
 async function initApp() {
     console.log('🚀 Conversor de Moedas iniciado');
+
+    loadCacheFromStorage();
 
     // Verifica elementos
     if (!verifyElements()) {
         console.warn('⚠️ Alguns elementos não foram encontrados');
     }
+
+    applyWidgetMode();
 
     // Configura timestamps
     updateLoadTimestamp();
@@ -644,7 +665,7 @@ if (document.readyState === 'loading') {
 window.debugConverter = {
     clearCache: () => {
         ratesCache = {};
-        cacheTimestamp = null;
+        localStorage.removeItem('ratesCache');
         console.log('🧹 Cache limpo');
         convertCurrency();
     },
